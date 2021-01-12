@@ -1,9 +1,25 @@
-import Layout from '../components/Layout'
-import '../styles/app.scss';
-const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1> Muxic Zero.js 👋</h1>
-  </Layout>
-)
+import Song from "../components/Song";
+import Player from "../components/Player";
 
-export default IndexPage
+import SongList from "../utils/song-list";
+import { useState } from "react";
+import { IList } from "../interfaces";
+
+const IndexPage = () => {
+  const [songs, setSongs] = useState<IList[]>(SongList());
+  const [currentSong, setCurrentSongs] = useState<IList>(songs[0]);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  return (
+    <>
+      <Song currentSong={currentSong} />
+      <Player
+        currentSong={currentSong}
+        setIsPlaying={setIsPlaying}
+        isPlaying={isPlaying}
+      />
+    </>
+  );
+};
+
+export default IndexPage;
