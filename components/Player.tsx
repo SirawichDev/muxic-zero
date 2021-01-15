@@ -1,14 +1,10 @@
 import React, {
   FC,
-  ReactNode,
-  ReactPortal,
   RefObject,
   SyntheticEvent,
-  useRef,
 } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IList } from "../interfaces/list";
-import { useState } from "react";
 import {
   faPlay,
   faAngleLeft,
@@ -26,16 +22,15 @@ type PlayerProps = {
 };
 const Player: FC<PlayerProps> = ({
   audioRef,
-  currentSong,
   isPlaying,
   setSongInfo,
   songInfo,
   setIsPlaying,
 }) => {
   // Volume Adjust props
-  // if (audioRef.current) {
-  //   audioRef.current.volume = .3;
-  // }
+  if (audioRef.current) {
+    audioRef.current.volume = .2;
+  }
   const playHandler = () => {
     if (isPlaying) {
       audioRef.current?.pause();
@@ -70,7 +65,7 @@ const Player: FC<PlayerProps> = ({
         <p>{getTime(songInfo.currentTime) || "0:00"}</p>
         <input
           min={0}
-          max={songInfo.duration}
+          max={songInfo.duration.toString()}
           value={songInfo.currentTime}
           onChange={dragHandler}
           type="range"
