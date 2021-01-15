@@ -1,19 +1,36 @@
-import React, { ChangeEvent, FC, SyntheticEvent, useRef } from "react";
+import React, {
+  FC,
+  RefObject,
+  SyntheticEvent,
+} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IList } from "../interfaces/list";
-import { useState } from "react";
 import {
   faPlay,
   faAngleLeft,
   faAngleRight,
+  faPause,
 } from "@fortawesome/free-solid-svg-icons";
+
 type PlayerProps = {
   currentSong: IList;
   setIsPlaying: (isPlaying: boolean) => void;
   isPlaying: boolean;
+  songInfo: Record<string, any>;
+  setSongInfo: (song: Record<string, any>) => void;
+  audioRef: RefObject<HTMLAudioElement>;
 };
-const Player: FC<PlayerProps> = ({ currentSong, isPlaying, setIsPlaying }) => {
-  const audioRef = useRef<HTMLAudioElement>(null);
+const Player: FC<PlayerProps> = ({
+  audioRef,
+  isPlaying,
+  setSongInfo,
+  songInfo,
+  setIsPlaying,
+}) => {
+  // Volume Adjust props
+  if (audioRef.current) {
+    audioRef.current.volume = .2;
+  }
   const playHandler = () => {
     if (isPlaying) {
       audioRef.current?.pause();
@@ -24,25 +41,36 @@ const Player: FC<PlayerProps> = ({ currentSong, isPlaying, setIsPlaying }) => {
     }
   };
 
-  const timeUpdateHandler = (e: SyntheticEvent) => {
-    const {
-      currentTime,
-    }: { currentTime: number } = e.target as HTMLMediaElement;
-    console.log(
-      "🚀 ~ file: Player.tsx ~ line 31 ~ timeUpdateHandler ~ currentTime",
-      currentTime
-    );
+  const getTime = (time: number) => {
+    if (time) {
+      return (
+        Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
+      );
+    }
   };
-  const [songInfo, setSongInfo] = useState<Record<string, unknown>>({
-    currentTime: null,
-    duration: null,
-  });
+  const dragHandler = (e: SyntheticEvent) => {
+    let { value }: { value: string } = e.target as HTMLInputElement;
+    if (audioRef.current) {
+      audioRef.current.currentTime = Number(value);
+    }
+    setSongInfo({
+      ...songInfo,
+      currentTime: value,
+    });
+  };
+
   return (
     <div className="player">
       <div className="time-control">
-        <p>Start Time</p>
-        <input type="range" />
-        <p>End Time</p>
+        <p>{getTime(songInfo.currentTime) || "0:00"}</p>
+        <input
+          min={0}
+          max={songInfo.duration.toString()}
+          value={songInfo.currentTime}
+          onChange={dragHandler}
+          type="range"
+        />
+        <p>{getTime(songInfo.duration)}</p>
       </div>
       <div className="play-control">
         <FontAwesomeIcon className="play" size="2x" icon={faAngleLeft} />
@@ -50,15 +78,10 @@ const Player: FC<PlayerProps> = ({ currentSong, isPlaying, setIsPlaying }) => {
           className="skip-back"
           onClick={playHandler}
           size="2x"
-          icon={faPlay}
+          icon={isPlaying ? faPause : faPlay}
         />
         <FontAwesomeIcon className="skip-next" size="2x" icon={faAngleRight} />
       </div>
-      <audio
-        onTimeUpdate={timeUpdateHandler}
-        ref={audioRef}
-        src={currentSong.audio}
-      ></audio>
     </div>
   );
 };
