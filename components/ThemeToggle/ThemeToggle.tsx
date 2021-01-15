@@ -1,13 +1,13 @@
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 import styled from "styled-components";
 type ToggleProps = {
+  children?: ReactNode;
   theme: string | (() => void);
-  toggleTheme: () => void;
+  toggleTheme?: any;
 };
 type BtnToggleProps = {
   children?: React.ReactNode;
   lightTheme?: boolean;
-  onClick?: () => void;
 };
 
 const ToggleContainer = styled.button<BtnToggleProps>`
