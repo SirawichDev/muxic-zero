@@ -18,7 +18,7 @@ const rotate = keyframes`
   }
 `;
 
-const Rotate = styled.div`
+const CircleWave = styled.div`
   .request-loader {
     position: relative;
     display: flex;
@@ -77,11 +77,11 @@ const Rotate = styled.div`
 const Song: FC<SongProps> = ({ currentSong }) => {
   return (
     <div className="song-container">
-      <Rotate>
+      <CircleWave>
         <div className="request-loader">
           <img alt={currentSong.name} src={currentSong.cover} />
         </div>
-      </Rotate>
+      </CircleWave>
 
       <h2>{currentSong.name}</h2>
       <h3>{currentSong.artist}</h3>
