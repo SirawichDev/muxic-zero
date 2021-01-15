@@ -2,44 +2,46 @@ import React, { FC } from "react";
 import styled from "styled-components";
 type ToggleProps = {
   theme: string | (() => void);
-  toggleTheme: string | (() => void);
+  toggleTheme: () => void;
 };
 type BtnToggleProps = {
-  children?: HTMLCollection | string,
-  lightTheme: string | (() => void);
-  onClick: ((e?: React.MouseEvent) => void);
-} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+  children?: React.ReactNode;
+  lightTheme?: boolean;
+  onClick?: () => void;
+};
 
 const ToggleContainer = styled.button<BtnToggleProps>`
-position: absolute;
-display: flex;
-right: 0;
-justify-content: space-between;
-background: ${({ theme }) => theme.gradient};
-width: 8rem;
-height: 3.5rem;
-margin: 0 auto;
-border-radius: 30px;
-border: 2px solid ${({ theme }) => theme.toggleBorder};
-font-size: 0.5rem;
-padding: 0.5rem;
-overflow: hidden;
-outline: none;
-cursor: pointer;
+  position: absolute;
+  display: flex;
+  right: 0;
+  justify-content: space-between;
+  background: ${({ theme }) => theme.gradient};
+  width: 8rem;
+  height: 3.5rem;
+  margin: 0 auto;
+  border-radius: 30px;
+  border: 2px solid ${({ theme }) => theme.toggleBorder};
+  font-size: 0.5rem;
+  padding: 0.5rem;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
 
-img {
-  max-width: 2.5rem;
-  height: auto;
-  transition: all 2s linear;
+  img {
+    max-width: 2.5rem;
+    height: auto;
+    transition: all 2s linear;
 
-  &:first-child {
-    transform: ${({ lightTheme }) => lightTheme ? "translateY(0)" : "translateY(100px)"};
+    &:first-child {
+      transform: ${({ lightTheme }) =>
+        lightTheme ? "translateY(0)" : "translateY(100px)"};
+    }
+
+    &:nth-child(2) {
+      transform: ${({ lightTheme }) =>
+        lightTheme ? "translateY(-100px)" : "translateY(0)"};
+    }
   }
-
-  &:nth-child(2) {
-    transform: ${({ lightTheme }) => lightTheme ? "translateY(-100px)" : "translateY(0)"};
-  }
-}
 `;
 
 const Toggle: FC<ToggleProps> = ({ theme, toggleTheme }) => {
