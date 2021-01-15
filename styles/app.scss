@@ -1,12 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap");
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-h1, h2, h3 {
-    color: black;
+h1,
+h2,
+h3 {
+  color: black;
+}
+body {
+  font-family: "Hachi Maru Pop", cursive;
 }
 
-@import './_song.scss';
-@import './_player.scss';
+@import "./_song.scss";
+@import "./_player.scss";
+@import "./library.scss";
