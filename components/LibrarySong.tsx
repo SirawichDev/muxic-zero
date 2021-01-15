@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent, RefObject } from "react";
+import React, { FC, RefObject } from "react";
 import { IList } from "../interfaces";
 
 type SongProps = {
