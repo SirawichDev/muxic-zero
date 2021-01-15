@@ -4,6 +4,7 @@
     text: string;
     toggleBorder?: string;
     gradient?: string;
+    boxShadow?: string;
   }
   
   
