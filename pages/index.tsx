@@ -22,6 +22,7 @@ const GlobalStyles = createGlobalStyle`
 
     .library {
       background-color: ${({ theme }) => theme.body};
+      box-shadow: ${({ theme }) => theme.boxShadow};
     }
 
     h1,
@@ -40,14 +41,14 @@ const GlobalStyles = createGlobalStyle`
 const lightTheme: StyledSongTheme = {
   body: "white",
   text: "#363537",
-  toggleBorder: "#fff",
+  toggleBorder: "#9fe6f8",
   gradient: "linear-gradient(#39598A, #79D7ED)",
 };
 
 const darkTheme: StyledSongTheme = {
   body: "#363537",
   text: "#FAFAFA",
-  toggleBorder: "#6B8096",
+  toggleBorder: "#af60e4",
   gradient: "linear-gradient(#091236, #1E215D)",
 };
 const useDarkMode = () => {
@@ -99,7 +100,7 @@ const IndexPage = () => {
       <ThemeProvider theme={themeMode}>
         <GlobalStyles />
         <>
-        <Toggle theme={theme} toggleTheme={toggleTheme} />
+          <Toggle theme={theme} toggleTheme={toggleTheme} />
         </>
         <Song currentSong={currentSong} />
         <Player
