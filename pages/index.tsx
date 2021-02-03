@@ -79,9 +79,17 @@ const useDarkMode = () => {
 const IndexPage = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [songs, setSongs] = useState<IList[]>(SongList());
+  console.log(
+    "🚀 ~ file: index.tsx ~ line 82 ~ IndexPage ~ setSongs",
+    setSongs
+  );
   const [currentSong, setCurrentSong] = useState<IList>(songs[0]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [theme, toggleTheme] = useDarkMode();
+  console.log(
+    "🚀 ~ file: index.tsx ~ line 89 ~ IndexPage ~ toggleTheme",
+    toggleTheme
+  );
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
   const [songInfo, setSongInfo] = useState<Record<string, any>>({

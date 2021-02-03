@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent, RefObject } from "react";
+import React, { FC, RefObject } from "react";
 import { IList } from "../interfaces";
 
 type SongProps = {
@@ -12,12 +12,10 @@ type SongProps = {
 const LibrarySong: FC<SongProps> = ({
   currentSong,
   setCurrentSong,
-  songs,
   isPlaying,
   audioRef,
-  id,
 }) => {
-  const songSelectHandler = (e: SyntheticEvent) => {
+  const songSelectHandler = () => {
     setCurrentSong(currentSong);
     console.log('isPlaying', isPlaying)
     if (isPlaying) {
