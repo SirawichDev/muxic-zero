@@ -8,7 +8,7 @@ type ToggleProps = {
 type BtnToggleProps = {
   children?: React.ReactNode;
   lightTheme?: boolean;
-};
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const ToggleContainer = styled.button<BtnToggleProps>`
   position: absolute;
