@@ -1,6 +1,8 @@
 import React, { FC, RefObject, SyntheticEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IList } from "../interfaces/list";
+import { useEffect } from "react";
+import { audioPlay } from "../utils/playAudio";
 import {
   faPlay,
   faAngleLeft,
@@ -16,21 +18,39 @@ type PlayerProps = {
   setSongInfo: (song: Record<string, any>) => void;
   audioRef: RefObject<HTMLAudioElement>;
   songs: IList[];
+  setSongs: (song: IList[]) => void;
   setCurrentSong: (song: IList) => void;
 };
 const Player: FC<PlayerProps> = ({
   audioRef,
   isPlaying,
   setSongInfo,
+  setSongs,
   currentSong,
   songInfo,
   setCurrentSong,
   songs,
   setIsPlaying,
 }) => {
+  useEffect(() => {
+    const newSongs = songs.map((song: IList) => {
+      if (song.id === currentSong.id) {
+        return {
+          ...song,
+          active: true,
+        };
+      } else {
+        return {
+          ...song,
+          active: false,
+        };
+      }
+    });
+    setSongs(newSongs);
+  }, [currentSong]);
   // Volume Adjust props
   if (audioRef.current) {
-    audioRef.current.volume = 0.2;
+    audioRef.current.volume = 0.5;
   }
   const playHandler = () => {
     if (isPlaying) {
@@ -66,6 +86,7 @@ const Player: FC<PlayerProps> = ({
     if (di === "skip-forward") {
       if ((currenIndex + 1) % songs.length >= songs.length) {
         setCurrentSong(songs[songs.length + 1]);
+        audioPlay(isPlaying, audioRef);
         return;
       }
       setCurrentSong(songs[(currenIndex + 1) % songs.length]);
@@ -73,10 +94,13 @@ const Player: FC<PlayerProps> = ({
     if (di === "skip-back") {
       if ((currenIndex - 1) % songs.length === -1) {
         setCurrentSong(songs[songs.length - 1]);
+        audioPlay(isPlaying, audioRef);
+
         return;
       }
       setCurrentSong(songs[(currenIndex - 1) % songs.length]);
     }
+    audioPlay(isPlaying, audioRef);
   };
 
   return (
