@@ -1,6 +1,6 @@
 import React, { FC, RefObject } from "react";
 import { IList } from "../interfaces";
-
+import { audioPlay } from "../utils/playAudio";
 type SongProps = {
   currentSong: IList;
   setCurrentSong: (song: IList) => void;
@@ -17,15 +17,8 @@ const LibrarySong: FC<SongProps> = ({
 }) => {
   const songSelectHandler = () => {
     setCurrentSong(currentSong);
-    console.log('isPlaying', isPlaying)
-    if (isPlaying) {
-      const play = audioRef.current?.play();
-      if (play !== undefined) {
-        play.then(() => {
-          audioRef.current?.play();
-        });
-      }
-    }
+    console.log("isPlaying", isPlaying);
+    audioPlay(isPlaying, audioRef);
   };
   return (
     <div onClick={songSelectHandler} className="library-song">

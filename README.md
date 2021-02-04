@@ -6,7 +6,7 @@
 - [x] Songs Lists
 - [ ] State management 
 - [ ] add song page
-- [ ] next/prev click song
+- [x] next/prev click song
 
 
 ## By Sirawich Voungchuy
